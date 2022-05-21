@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "224301985869",
+    "project_id": "zikochatapp",
+    "storage_bucket": "zikochatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224301985869:android:a6c4e037349e509d342c04",
+        "android_client_info": {
+          "package_name": "com.chat_easy.chateasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224301985869-dkkcoibbgpdisa92atjcpn93qhlhqo43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkGyt4wuBq78LDiv75SKDpQRFPK70Z0GQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224301985869-dkkcoibbgpdisa92atjcpn93qhlhqo43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224301985869:android:f23edcc520919a18342c04",
+        "android_client_info": {
+          "package_name": "com.chat_easy.chateasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "224301985869-dkkcoibbgpdisa92atjcpn93qhlhqo43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkGyt4wuBq78LDiv75SKDpQRFPK70Z0GQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "224301985869-dkkcoibbgpdisa92atjcpn93qhlhqo43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
