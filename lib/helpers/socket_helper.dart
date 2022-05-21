@@ -18,7 +18,8 @@ class SocketHelper {
   static final shared = SocketHelper();
   var baseurl = UrlHelper.shared;
 
-  final cloudinary = CloudinaryPublic('zeekoh', 'ml_default', cache: false);
+  final cloudinary =
+      CloudinaryPublic('cloud_name', 'upload_preset', cache: false);
   MsgController msgController = MsgController();
   TypeController typeController = TypeController();
   ScrollController scrollController = ScrollController();

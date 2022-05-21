@@ -17,7 +17,7 @@ class AgoraProvider with ChangeNotifier {
     try {
       late String token;
       var url =
-          Uri.parse('${baseurl.baseUrl}/accesstoken?channelName=ezechannel');
+          Uri.parse('${baseurl.baseUrl}/accesstoken?channelName=channelname');
       final headers = {"Content-type": "application/json"};
       final res = await http.get(url, headers: headers);
       final extractData = json.decode(res.body);
