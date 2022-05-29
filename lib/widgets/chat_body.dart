@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import './primary_button.dart';
 import './card_skelton.dart';
+import '../pages/contact_page.dart';
+import '../constants.dart';
 
 class ChatBody extends StatelessWidget {
   ChatBody(
@@ -9,12 +11,14 @@ class ChatBody extends StatelessWidget {
       required this.refresh,
       required this.itemBuilder,
       required this.isLoading,
-      required this.length})
+      required this.length,
+      required this.isEmpty1})
       : super(key: key);
   RefreshCallback refresh;
   bool isLoading;
   int? length;
   IndexedWidgetBuilder itemBuilder;
+  List isEmpty1;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +38,29 @@ class ChatBody extends StatelessWidget {
                   ),
                 )
               : Expanded(
-                  child: ListView.builder(
-                      itemCount: length, itemBuilder: itemBuilder),
+                  child: isEmpty1.isEmpty
+                      ? Padding(
+                          padding:
+                              EdgeInsets.only(top: 15, left: 80, right: 80),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.people_outline, size: 40),
+                              const SizedBox(height: 2),
+                              Text('Please create a new chat'),
+                              const SizedBox(height: 20),
+                              PrimaryButton(
+                                  text: 'Click here',
+                                  press: () {
+                                    Navigator.of(context)
+                                        .pushNamed(ContactPage.routename);
+                                  },
+                                  padding: EdgeInsets.all(kDefaultPadding / 2)),
+                            ],
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: length, itemBuilder: itemBuilder),
                 ),
         ],
       ),

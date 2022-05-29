@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
 import '../constants.dart';
 import '../models/user_model.dart';
+import '../providers/chat_provider.dart';
 import '../newscreens/home_screen.dart';
 import '../models/http_exception.dart';
 import '../widgets/headercurved_cont.dart';
@@ -96,8 +97,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _isLoading = true;
     });
     try {
+      var chats = Provider.of<ChatProvider>(context, listen: false);
       await Provider.of<UserProvider>(context, listen: false)
           .updateUser(_editUser);
+      await chats.updateChatAbout(_editUser.about!);
+      await chats.updateChatName(_editUser.name!);
     } on HttpException catch (err) {
       var errMsg = 'An error occurred';
       if (err
@@ -116,13 +120,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         _isLoading = false;
       });
-      Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+      Navigator.of(context).pushNamed(HomeScreen.routename);
     }
     setState(() {
       _isLoading = false;
     });
 
-    Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+    Navigator.of(context).pushNamed(HomeScreen.routename);
   }
 
   @override
@@ -248,7 +252,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ]),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -281,7 +285,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   AppBar buildAppBar() {
     return AppBar(
-      backgroundColor: Color(0xFF013666),
-    );
+        //backgroundColor: Color(0xFF013666),
+        );
   }
 }

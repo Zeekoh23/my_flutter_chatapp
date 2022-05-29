@@ -14,7 +14,8 @@ import '../providers/agora_provider.dart';
 import '../constants.dart';
 
 class VideoCallScreen extends StatefulWidget {
-  const VideoCallScreen({Key? key}) : super(key: key);
+  const VideoCallScreen({Key? key, required this.name}) : super(key: key);
+  final String name;
 
   @override
   _VideoCallScreenState createState() => _VideoCallScreenState();
@@ -24,6 +25,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   int? _remoteUid;
   late RtcEngine _engine;
   late String token;
+  bool _joined = false;
+  bool _switch = false;
   bool muted = false;
   late RtcStats _stats;
   bool _showStats = false;
@@ -55,12 +58,17 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
         await Provider.of<AgoraProvider>(context, listen: false).agoraToken();
     print(token);
     await [Permission.microphone, Permission.camera].request();
+    // Create RTC client instance
     _engine = await RtcEngine.createWithContext(RtcEngineContext(appId));
     await _engine.enableVideo();
 
+    // Define event handling logic
     _engine.setEventHandler(
       RtcEngineEventHandler(
           joinChannelSuccess: (String channel, int uid, int elapsed) {
+        setState(() {
+          _joined = true;
+        });
         print('local user $uid joined');
       }, userJoined: (int uid, int elapsed) {
         print("remote user $uid joined");
@@ -89,6 +97,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       }),
     );
 
+    //enable video
+    await _engine.enableVideo();
+
+    // Join channel with channel name
     await _engine.joinChannel(token, "ezechannel", null, 0);
   }
 
@@ -104,15 +116,22 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       body: Stack(
         children: [
           Center(
-            child: _renderRemoteVideo(),
+            child: _switch ? _renderRemoteVideo() : _renderLocalPreview(),
           ),
           Align(
             alignment: Alignment.topLeft,
             child: Container(
               width: 100,
               height: 100,
-              child: Center(
-                child: _renderLocalPreview(),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _switch = !_switch;
+                  });
+                },
+                child: Center(
+                  child: _switch ? _renderLocalPreview() : _renderRemoteVideo(),
+                ),
               ),
             ),
           ),
@@ -131,7 +150,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: viewinsets.bottom + size.height - 520,
+                bottom: viewinsets.bottom + size.height - 570,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -194,17 +213,23 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     );
   }
 
+  //local preview
   Widget _renderLocalPreview() {
-    return Transform.rotate(
-        angle: 90 * pi / 180, child: RtcLocalView.SurfaceView());
+    if (_joined) {
+      return Transform.rotate(
+          angle: 90 * pi / 180, child: RtcLocalView.SurfaceView());
+    } else {
+      return Text('Please join channel first', textAlign: TextAlign.center);
+    }
   }
 
+  // Remote preview
   Widget _renderRemoteVideo() {
     if (_remoteUid != null) {
       return RtcRemoteView.SurfaceView(
           uid: _remoteUid!, channelId: 'ezechannel');
     } else {
-      return const Text('Please wait for remote user to join',
+      return Text('Please wait for ${widget.name} to join',
           textAlign: TextAlign.center);
     }
   }

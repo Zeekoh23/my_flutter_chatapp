@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 //https://mycolor.space/
 
-const kPrimaryColor = Color(0xFFABA9BB); //Color(0xFF013666); //
+const kPrimaryColor = Color(0xFF8186F1);
+    //Color(0xFF268686); //Color(0xFFABA9BB); //Color(0xFF013666); //
 const kSecondaryColor = Color(0xFFFE9901);
 const kContentColorLightTheme = Color(0xFF1D1D35);
 const kContentColorDarkTheme = Color(0xFFF5FCF9);

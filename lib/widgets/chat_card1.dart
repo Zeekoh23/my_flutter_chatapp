@@ -21,18 +21,19 @@ class _ChatCardState extends State<ChatCard1> {
   @override
   Widget build(BuildContext context) {
     final users = Provider.of<UserItem>(context, listen: false);
-    var cloudinaryImage = CloudinaryImage(users.image!);
-    final String imagePath =
-        cloudinaryImage.transform().width(300).height(300).generate();
 
     var result = users.image!.substring(0, 22);
     if (result == 'https://res.cloudinary') {
-      return pictureType(users: users, path: imagePath);
+      var cloudinaryImage = CloudinaryImage(users.image!);
+      final String imagePath =
+          cloudinaryImage.transform().width(300).height(300).generate();
+      return pictureType(users, imagePath);
+    } else {
+      return pictureType(users, users.image!);
     }
-    return pictureType(users: users, path: users.image!);
   }
 
-  Widget pictureType({required UserItem users, required String path}) {
+  Widget pictureType(UserItem users, String path) {
     return Column(children: [
       InkWell(
           onTap: () {

@@ -69,7 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreens> {
                         child: FlatButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
-                            color: kSecondaryColor,
+                            color: kPrimaryColor,
                             onPressed: () {
                               Navigator.push(
                                   context,
@@ -108,7 +108,7 @@ class _WelcomeScreenState extends State<WelcomeScreens> {
       height: 6,
       width: currentPage == index ? 20 : 6,
       decoration: BoxDecoration(
-        color: currentPage == index ? kSecondaryColor : Colors.white,
+        color: currentPage == index ? kPrimaryColor : Colors.white,
         borderRadius: BorderRadius.circular(3),
       ),
     );

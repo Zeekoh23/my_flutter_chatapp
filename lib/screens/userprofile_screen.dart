@@ -4,7 +4,8 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import '../constants.dart';
 import '../screens/profilepicview_screen.dart';
 import '../helpers/socket_helper.dart';
-import '../widgets/picture_type.dart';
+import '../widgets/cloudinary_image.dart';
+import '../widgets/normal_image.dart';
 import './audiocall_screen.dart';
 import './videocall_screen.dart';
 
@@ -24,9 +25,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   var socket = SocketHelper.shared;
   Widget build(BuildContext context) {
     var result = widget.image!.substring(0, 22);
-    var cloudinaryImage = CloudinaryImage(widget.image!);
-    final String imagePath =
-        cloudinaryImage.transform().width(610).height(600).generate();
+
     return Scaffold(
       appBar: AppBar(centerTitle: true, title: const Text('Contact Info')),
       body: Container(
@@ -43,9 +42,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (result == 'https://res.cloudinary')
-                        PictureType(path: imagePath)
+                        CloudinaryImage1(image: widget.image!)
                       else
-                        PictureType(path: widget.image!),
+                        NormalImage(path: widget.image!),
                     ],
                   ),
                   const SizedBox(height: 8),
@@ -116,7 +115,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (builder) => VideoCallScreen(),
+                                  builder: (builder) =>
+                                      VideoCallScreen(name: widget.name!),
                                 ));
                           },
                           child: Column(

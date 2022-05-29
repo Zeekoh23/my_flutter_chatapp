@@ -83,7 +83,7 @@ class _MessageListState extends State<MessageList> {
               borderRadius: BorderRadius.circular(8),
             ),
             color: kPrimaryColor.withOpacity(
-              widget.messages!.isSender ? 1 : 0.1,
+              widget.messages!.isSender ? 0.3 : 0.1,
             ),
             child: Stack(
               children: [
@@ -126,7 +126,7 @@ class _MessageListState extends State<MessageList> {
           horizontal: kDefaultPadding * 0.75, vertical: kDefaultPadding / 2.5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: kPrimaryColor.withOpacity(widget.messages!.isSender ? 1 : 0.1),
+        color: kPrimaryColor.withOpacity(widget.messages!.isSender ? 0.4 : 0.1),
       ),
       child: Row(
         children: [
@@ -148,7 +148,7 @@ class _MessageListState extends State<MessageList> {
                     height: 2,
                     color: widget.messages!.isSender
                         ? Colors.white
-                        : kPrimaryColor.withOpacity(0.4),
+                        : kPrimaryColor,
                   ),
                   Positioned(
                     left: 0,
@@ -196,7 +196,7 @@ class _MessageListState extends State<MessageList> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: kPrimaryColor
-                  .withOpacity(widget.messages!.isSender ? 1 : 0.1),
+                  .withOpacity(widget.messages!.isSender ? 0.3 : 0.1),
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -205,7 +205,7 @@ class _MessageListState extends State<MessageList> {
               child: Card(
                 margin: const EdgeInsets.all(3),
                 color: kPrimaryColor.withOpacity(
-                  widget.messages!.isSender ? 1 : 0.1,
+                  widget.messages!.isSender ? 0.2 : 0.1,
                 ),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15)),
@@ -225,18 +225,23 @@ class _MessageListState extends State<MessageList> {
                           alignment: Alignment.center,
                           children: [
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.27,
-                              child: FadeInImage(
-                                placeholder: const AssetImage(
-                                    'assets/images/person.png'),
-                                image: NetworkImage(imagePath),
-                              ),
-                            ),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.27,
+                                child: FadeInImage(
+                                  placeholder: const AssetImage(
+                                      'assets/images/person.png'),
+                                  image: NetworkImage(imagePath),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: widget.messages!.isSender
+                                      ? kPrimaryColor.withOpacity(0.2)
+                                      : Colors.white,
+                                )),
                             Container(
                               height: 45,
                               width: 45,
-                              decoration: const BoxDecoration(
-                                color: kPrimaryColor,
+                              decoration: BoxDecoration(
+                                color: kPrimaryColor.withOpacity(0.3),
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
@@ -305,7 +310,7 @@ class _MessageListState extends State<MessageList> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: kPrimaryColor
-                  .withOpacity(widget.messages!.isSender ? 1 : 0.1),
+                  .withOpacity(widget.messages!.isSender ? 0.3 : 0.1),
             ),
             child: ConstrainedBox(
               constraints: BoxConstraints(
@@ -314,7 +319,7 @@ class _MessageListState extends State<MessageList> {
               child: Card(
                 margin: const EdgeInsets.all(3),
                 color: kPrimaryColor.withOpacity(
-                  widget.messages!.isSender ? 1 : 0.1,
+                  widget.messages!.isSender ? 0.2 : 0.1,
                 ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -337,15 +342,15 @@ class _MessageListState extends State<MessageList> {
                             child: Image.asset('assets/images/gallery1.jpg'),
                             decoration: BoxDecoration(
                               color: widget.messages!.isSender
-                                  ? kPrimaryColor
+                                  ? kPrimaryColor.withOpacity(0.2)
                                   : Colors.white,
                             ),
                           ),
                           Container(
                             height: 45,
                             width: 45,
-                            decoration: const BoxDecoration(
-                              color: kPrimaryColor,
+                            decoration: BoxDecoration(
+                              color: kPrimaryColor.withOpacity(0.3),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
@@ -416,12 +421,12 @@ class _MessageListState extends State<MessageList> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: kPrimaryColor
-                      .withOpacity(widget.messages!.isSender ? 1 : 0.1),
+                      .withOpacity(widget.messages!.isSender ? 0.3 : 0.1),
                 ),
                 child: Card(
                   margin: const EdgeInsets.all(3),
                   color: kPrimaryColor
-                      .withOpacity(widget.messages!.isSender ? 1 : 0.1),
+                      .withOpacity(widget.messages!.isSender ? 0.2 : 0.1),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   child: Column(
@@ -444,7 +449,7 @@ class _MessageListState extends State<MessageList> {
                             ),
                             decoration: BoxDecoration(
                               color: widget.messages!.isSender
-                                  ? kPrimaryColor
+                                  ? kPrimaryColor.withOpacity(0.2)
                                   : Colors.white,
                             ),
                           )),
@@ -498,7 +503,7 @@ class _MessageListState extends State<MessageList> {
         case MessageStatus.not_view:
           return Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.1);
         case MessageStatus.viewed:
-          return kPrimaryColor;
+          return kPrimaryColor.withOpacity(0.2);
         default:
           return Colors.transparent;
       }

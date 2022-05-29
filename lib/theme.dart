@@ -11,8 +11,10 @@ ThemeData LightThemeData(BuildContext context) {
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: appBarTheme,
     iconTheme: const IconThemeData(color: kContentColorLightTheme),
-    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
-        .apply(bodyColor: kContentColorLightTheme),
+    textTheme: GoogleFonts.soraTextTheme(Theme.of(context).textTheme)
+        .apply(bodyColor: kContentColorLightTheme, fontSizeFactor: 0.5),
+    /*GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+        .apply(bodyColor: kContentColorLightTheme), */
     colorScheme: const ColorScheme.light(
         primary: kPrimaryColor, secondary: kSecondaryColor, error: kErrorColor),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -50,6 +52,4 @@ ThemeData darkThemeData(BuildContext context) {
 }
 
 const appBarTheme = AppBarTheme(
-  centerTitle: false,
-  elevation: 0,
-);
+    centerTitle: false, elevation: 0, backgroundColor: kPrimaryColor);

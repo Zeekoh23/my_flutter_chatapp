@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 
 import '../models/message_model.dart';
 import '../helpers/url_helper.dart';
-import '../screens/individual_screen.dart';
+
 import '../models/typing_model.dart';
 import '../helpers/socket_helper.dart';
 

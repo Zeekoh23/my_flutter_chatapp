@@ -21,14 +21,15 @@ class _ChatCardState extends State<ChatCard> {
   @override
   Widget build(BuildContext context) {
     final chat = Provider.of<Chat>(context, listen: false);
-    var cloudinaryImage = CloudinaryImage(chat.image!);
+
     final chatprovider = Provider.of<ChatProvider>(context, listen: false);
-    final String imagePath =
-        cloudinaryImage.transform().width(300).height(300).generate();
 
     var result = chat.image!.substring(0, 22);
 
     if (result == 'https://res.cloudinary') {
+      var cloudinaryImage = CloudinaryImage(chat.image!);
+      final String imagePath =
+          cloudinaryImage.transform().width(300).height(300).generate();
       return pictureType(
           chat: chat, chatprovider: chatprovider, path: imagePath);
     }

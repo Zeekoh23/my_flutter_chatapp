@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 
 import '../constants.dart';
+import '../providers/chat_provider.dart';
 import '../helpers/socket_helper.dart';
 import '../providers/user_provider.dart';
 
@@ -27,6 +28,7 @@ class _ProfileViewPicScreenState extends State<ProfileViewPicScreen> {
   @override
   Widget build(BuildContext context) {
     var user = Provider.of<UserProvider>(context, listen: false);
+    var chats = Provider.of<ChatProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: const Text('Profile Picture'), centerTitle: true),
       body: Hero(
@@ -56,6 +58,7 @@ class _ProfileViewPicScreenState extends State<ProfileViewPicScreen> {
                           );
 
                           user.updateProfilePic(response.secureUrl, context);
+                          chats.updateChatImage(response.secureUrl);
                         },
                         child: const CircleAvatar(
                           radius: 27,

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class HeaderCurvedContainer extends CustomPainter {
   HeaderCurvedContainer({Key? key, required this.a, required this.b});
   double a;
   double b;
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xFF013666);
+    Paint paint = Paint()..color = kPrimaryColor;
     Path path = Path()
       ..relativeLineTo(0, 150)
       ..quadraticBezierTo(size.width / 1, a, size.width / 1, b)

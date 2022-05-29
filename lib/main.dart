@@ -17,6 +17,7 @@ import './providers/chat_provider.dart';
 import './models/chat_model.dart';
 import './pages/profile_page.dart';
 import './screens/editprofile_screen.dart';
+import './pages/contact_page.dart';
 
 import './providers/user_provider.dart';
 import './providers/message_provider.dart';
@@ -97,6 +98,7 @@ class MyApp extends StatelessWidget {
                       CameraScreen.routename: (ctx) => CameraScreen(),
                       EditProfileScreen.routename: (ctx) => EditProfileScreen(),
                       ProfilePage.routename: (ctx) => ProfilePage(),
+                      ContactPage.routename: (ctx) => ContactPage(),
                     }),
               ),
             ),

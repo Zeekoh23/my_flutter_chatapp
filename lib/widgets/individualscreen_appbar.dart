@@ -89,7 +89,7 @@ PreferredSize Prefer(
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (builder) => VideoCallScreen(),
+                      builder: (builder) => VideoCallScreen(name: name),
                     ));
               }),
           const SizedBox(width: kDefaultPadding / 2),

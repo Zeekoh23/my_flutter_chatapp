@@ -42,6 +42,7 @@ class _ContactCardState extends State<ContactCard> {
   Widget build(BuildContext context) {
     final users1 = Provider.of<UserProvider>(context).items;
     return ChatBody(
+        isEmpty1: users1,
         refresh: () => _fetchUsers(),
         itemBuilder: (_, i) {
           return ChangeNotifierProvider.value(

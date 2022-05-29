@@ -19,7 +19,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Map<String, String> _userData = {'email': ''};
   var _isLoading = false;
 
-  void _showErrorDialog(String message) {
+  _showErrorDialog(String message) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -52,7 +52,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           .forgotPassword(_userData['email']!);
     } on HttpException catch (err) {
       var errMsg = 'An error occurred';
-      if (err
+      if (err.toString().contains('There is no user with email address')) {
+        errMsg = 'There is no user with email address';
+      } else if (err
           .toString()
           .contains('Cast to ObjectId failed for value \"forgotpassword\"')) {
         errMsg = 'Id issue';
@@ -63,7 +65,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       _showErrorDialog(errMsg);
     } catch (err) {
       const errMsg = 'email not sent';
-      _showErrorDialog(errMsg);
+      await _showErrorDialog(errMsg);
     } finally {
       setState(() {
         _isLoading = false;
@@ -97,7 +99,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Container(
                       width: size.width / 1.1,
                       child: const Text(
-                        'Please put your Email',
+                        'Please put your correct Email',
                         style: TextStyle(
                           fontSize: 21,
                           fontWeight: FontWeight.w500,

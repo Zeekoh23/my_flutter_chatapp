@@ -6,6 +6,7 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 
 import '../constants.dart';
 import '../pages/chat_page.dart';
+import '../helpers/socket_helper.dart';
 import '../pages/contact_page.dart';
 import '../models/push_notification.dart';
 import '../pages/profile_page.dart';
@@ -26,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
     var image = Provider.of<UserProvider>(context, listen: false).image;
     return image;
   }
+
+  var socket = SocketHelper.shared;
 
   late final FirebaseMessaging _messaging;
   late int _totalNotificationCounter;
@@ -83,9 +86,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  String get source {
+    var number = Provider.of<UserProvider>(context, listen: false).number;
+    return number;
+  }
+
   @override
   void initState() {
     super.initState();
+
+    socket.connect(source, context);
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage msg) {
       print(msg);

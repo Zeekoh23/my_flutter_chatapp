@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 import '../models/http_exception.dart';
 import '../helpers/url_helper.dart';
 
-const appId = "4d0c85ee1d2d41b99c3e873f498f7c84";
+const appId = "agora_appid";
 
 class AgoraProvider with ChangeNotifier {
   var log = Logger();
@@ -17,7 +17,7 @@ class AgoraProvider with ChangeNotifier {
     try {
       late String token;
       var url =
-          Uri.parse('${baseurl.baseUrl}/accesstoken?channelName=channelname');
+          Uri.parse('${baseurl.baseUrl}/accesstoken?channelName=ezechannel');
       final headers = {"Content-type": "application/json"};
       final res = await http.get(url, headers: headers);
       final extractData = json.decode(res.body);

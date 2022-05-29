@@ -265,6 +265,40 @@ class ChatProvider with ChangeNotifier {
     }
   }
 
+  Future<void> updateChatProperty(String params, String body) async {
+    try {
+      final headers = {"Content-type": "application/json"};
+
+      var url = Uri.parse("${baseurl.baseUrl}/api/v1/chats/$params/$email");
+
+      final res = await http.post(url,
+          headers: headers,
+          body: json.encode({
+            params: body,
+          }));
+      log.i(body);
+      final resData = json.decode(res.body);
+      log.i(resData);
+    } catch (err) {
+      throw HttpException('Update chat property error is $err');
+    }
+  }
+
+  Future<void> updateChatImage(String imageUpdate) async {
+    String image = 'image';
+    await updateChatProperty(image, imageUpdate);
+  }
+
+  Future<void> updateChatAbout(String aboutUpdate) async {
+    String about = 'about';
+    await updateChatProperty(about, aboutUpdate);
+  }
+
+  Future<void> updateChatName(String nameUpdate) async {
+    String name = 'name';
+    await updateChatProperty(name, nameUpdate);
+  }
+
   Future<void> updateChatQuantity(Chat chat) async {
     try {
       final headers = {"Content-type": "application/json"};

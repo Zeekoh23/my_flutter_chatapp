@@ -57,9 +57,7 @@ class _UserIndividualCardState extends State<UserIndividualCard> {
   @override
   void initState() {
     super.initState();
-    socket.connect(
-      source,
-    );
+    //socket.connect(source, context);
 
     focus.addListener(() {
       if (focus.hasFocus) {
@@ -331,8 +329,8 @@ class _UserIndividualCardState extends State<UserIndividualCard> {
                 enableSkinTones: true,
                 showRecentsTab: true,
                 recentsLimit: 6,
-                noRecentsText: "No Recents",
-                noRecentsStyle: TextStyle(fontSize: 20, color: Colors.black26),
+                //noRecentsText: "No Recents",
+                // noRecentsStyle: TextStyle(fontSize: 20, color: Colors.black26),
                 tabIndicatorAnimDuration: kTabScrollDuration,
                 categoryIcons: CategoryIcons(),
                 buttonMode: ButtonMode.MATERIAL)));

@@ -7,6 +7,7 @@ class ContactPage extends StatelessWidget {
   ContactPage({
     Key? key,
   }) : super(key: key);
+  static const routename = "/contacts";
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class ContactPage extends StatelessWidget {
   AppBar buildAppBar() {
     return AppBar(
       backgroundColor: kPrimaryColor,
-      automaticallyImplyLeading: false,
+      //automaticallyImplyLeading: false,
       title: const Text('Contacts'),
       actions: [
         IconButton(

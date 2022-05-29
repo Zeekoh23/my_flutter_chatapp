@@ -3,12 +3,14 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../models/message_model.dart';
 import './url_helper.dart';
 import '../controllers/msg_controller.dart';
 import '../controllers/type_controller.dart';
-
+import '../providers/user_provider.dart';
 import './list_helper.dart';
 import './get_it1.dart';
 import '../models/typing_model.dart';
@@ -21,6 +23,10 @@ class SocketHelper {
   final cloudinary =
       CloudinaryPublic('cloud_name', 'upload_preset', cache: false);
   MsgController msgController = MsgController();
+
+  /*MsgController msgController = MsgController(
+      context: shared.context!, source: shared.source, number: shared.number);*/
+  //MsgController msgController = Get.put(MsgController());
   TypeController typeController = TypeController();
   ScrollController scrollController = ScrollController();
   XFile? xfile;
@@ -39,14 +45,16 @@ class SocketHelper {
 
   void connect(
     String source,
+    BuildContext context,
   ) {
+    var token = Provider.of<UserProvider>(context, listen: false).token;
+    log.i(token);
     socket = io.io(
         '${baseurl.baseUrl}',
-        io.OptionBuilder()
-            .setTransports(['websocket'])
-            .disableAutoConnect()
-            .build());
-    socket!.connect();
+        io.OptionBuilder().setTransports(['websocket'])
+            //.disableAutoConnect()
+            .setExtraHeaders({'received': token}).build());
+    //socket!.connect();
     socket!.on('connect', (data) {
       print(data);
       socket!.emit('chatid', {'id': source});

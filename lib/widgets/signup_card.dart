@@ -73,21 +73,23 @@ class _SignupCardState extends State<SignupCard> {
           _userData['about']!);
     } on HttpException catch (error) {
       var errorMsg = 'Authentication failed';
-      if (error.toString().contains('E11000 duplicate key error collection')) {
-        errorMsg = 'This email address is already in use.';
-      } else if (error.toString().contains('Please provide an email')) {
+      if (error
+          .toString()
+          .contains('Duplicate field value. please use another value')) {
+        errorMsg = 'This email address or number is already in use.';
+      } else if (error
+          .toString()
+          .contains('Invalid input data. Please provide an email')) {
         errorMsg = 'Wrong email format';
-      } else if (error.toString().contains(
-          'Path `password` (`test`) is shorter than the minimum allowed length (8).')) {
-        errorMsg = 'This password is too weak.';
-      } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMsg = 'Could not find a user with that email.';
-      } else if (error.toString().contains('Incorrect number or password')) {
-        errorMsg = 'Invalid credentials';
+      } else if (error
+          .toString()
+          .contains('Invalid input data. Path `password`')) {
+        errorMsg = 'This password is too weak. Minimum of 8 character length';
       }
       _showErrorDialog(errorMsg);
     } catch (error) {
-      const errorMsg = 'Could not authenticate you. Please try again later.';
+      const errorMsg =
+          'Could not authenticate you, network issues. Please try again later.';
       _showErrorDialog(errorMsg);
     }
     setState(() {
@@ -125,7 +127,7 @@ class _SignupCardState extends State<SignupCard> {
                 'Sign in to continue',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 18,
                     fontWeight: FontWeight.w500),
               ),
             ),
@@ -142,7 +144,7 @@ class _SignupCardState extends State<SignupCard> {
                 vertical: 18.0,
               ),
               child: Container(
-                  height: size.height / 10,
+                  height: size.height / 8,
                   width: size.width,
                   alignment: Alignment.center,
                   child: Container(
@@ -173,7 +175,7 @@ class _SignupCardState extends State<SignupCard> {
                   )),
             ),
             Container(
-                height: size.height / 10,
+                height: size.height / 8,
                 width: size.width,
                 alignment: Alignment.center,
                 child: Container(
@@ -207,7 +209,7 @@ class _SignupCardState extends State<SignupCard> {
                 vertical: 15.0,
               ),
               child: Container(
-                  height: size.height / 10,
+                  height: size.height / 8,
                   width: size.width,
                   alignment: Alignment.center,
                   child: Container(
@@ -242,7 +244,7 @@ class _SignupCardState extends State<SignupCard> {
                 vertical: 0.0,
               ),
               child: Container(
-                  height: size.height / 10,
+                  height: size.height / 8,
                   width: size.width,
                   alignment: Alignment.center,
                   child: Container(
@@ -277,7 +279,7 @@ class _SignupCardState extends State<SignupCard> {
                 vertical: 14.0,
               ),
               child: Container(
-                  height: size.height / 10,
+                  height: size.height / 8,
                   width: size.width,
                   alignment: Alignment.center,
                   child: Container(
@@ -312,7 +314,7 @@ class _SignupCardState extends State<SignupCard> {
                 vertical: 3.0,
               ),
               child: Container(
-                  height: size.height / 10,
+                  height: size.height / 8,
                   width: size.width,
                   alignment: Alignment.center,
                   child: Container(

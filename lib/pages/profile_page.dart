@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cloudinary_public/cloudinary_public.dart';
 
 import '../constants.dart';
 import '../newscreens/welcome_screens.dart';
@@ -10,7 +9,8 @@ import '../screens/profilepicview_screen.dart';
 import '../screens/editprofile_screen.dart';
 import '../providers/user_provider.dart';
 import '../widgets/headercurved_cont.dart';
-import '../widgets/picture_type.dart';
+import '../widgets/cloudinary_image.dart';
+import '../widgets/normal_image.dart';
 
 import '../helpers/socket_helper.dart';
 
@@ -73,9 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
     var result = image.substring(0, 22);
     final viewinsets = MediaQuery.of(context).viewInsets;
     final size = MediaQuery.of(context).size;
-    var cloudinaryImage = CloudinaryImage(image);
-    final String imagePath =
-        cloudinaryImage.transform().width(610).height(600).generate();
+
     print(result);
     return Scaffold(
       body: SingleChildScrollView(
@@ -123,9 +121,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   const SizedBox(height: 10),
                   if (result == 'https://res.cloudinary')
-                    PictureType(path: imagePath)
+                    CloudinaryImage1(image: image)
                   else
-                    PictureType(path: image),
+                    NormalImage(path: image),
                   const SizedBox(
                     height: 10,
                   ),
@@ -139,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   textfield(about),
                   const SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -171,8 +169,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    bottom: viewinsets.bottom + size.height - 495,
-                    left: viewinsets.left + size.width - 224),
+                    bottom: viewinsets.bottom + size.height - 535,
+                    left: viewinsets.left + size.width - 264),
                 child: CircleAvatar(
                   backgroundColor: Colors.black54,
                   child: IconButton(
@@ -213,9 +211,9 @@ class _ProfilePageState extends State<ProfilePage> {
         decoration: InputDecoration(
             hintText: hintText,
             hintStyle: const TextStyle(
-              letterSpacing: 2,
+              //letterSpacing: 2,
               color: Colors.white,
-              fontWeight: FontWeight.bold,
+              //fontWeight: FontWeight.bold,
             ),
             fillColor: Theme.of(context).scaffoldBackgroundColor,
             filled: true,

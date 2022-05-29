@@ -27,11 +27,14 @@ class IndividualCard extends StatefulWidget {
   Chat? chat;
   String? image;
 
+  static final individual = IndividualCard();
+
   @override
-  _IndividualCardState createState() => _IndividualCardState();
+  IndividualCardState createState() => IndividualCardState();
 }
 
-class _IndividualCardState extends State<IndividualCard> {
+class IndividualCardState extends State<IndividualCard> {
+  static final inCardState = IndividualCardState();
   TextEditingController _textcontroller = TextEditingController();
   FocusNode focus = FocusNode();
   bool show = false;
@@ -50,10 +53,22 @@ class _IndividualCardState extends State<IndividualCard> {
     return name;
   }
 
-  Future<void> _fetchMessages() async {
-    await Provider.of<MessageProvider>(context, listen: false)
+  Future<void> _fetchMessages(BuildContext context1) async {
+    await Provider.of<MessageProvider>(context1, listen: false)
         .fetchMessages(source, widget.chat!.number!);
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _fetchMessages(context);
+  }
+
+  /*@override
+  void dispose() async {
+    super.dispose();
+    await Provider.of<MessageProvider>(context).demeChatMessages;
+  }*/
 
   @override
   void initState() {
@@ -63,9 +78,12 @@ class _IndividualCardState extends State<IndividualCard> {
 
     listenNotifications();
 
-    _fetchMessages();
+    //Timer.run(() => _fetchMessages(context));
 
-    socket.connect(source);
+    //Future.delayed(Duration.zero, () => _fetchMessages());
+
+    /*WidgetsBinding.instance
+        .addPostFrameCallback((_) => _fetchMessages(context));*/
 
     focus.addListener(() {
       if (focus.hasFocus) {
@@ -359,8 +377,8 @@ class _IndividualCardState extends State<IndividualCard> {
                 enableSkinTones: true,
                 showRecentsTab: true,
                 recentsLimit: 6,
-                noRecentsText: "No Recents",
-                noRecentsStyle: TextStyle(fontSize: 20, color: Colors.black26),
+                //noRecentsText: "No Recents",
+                // noRecentsStyle: TextStyle(fontSize: 20, color: Colors.black26),
                 tabIndicatorAnimDuration: kTabScrollDuration,
                 categoryIcons: CategoryIcons(),
                 buttonMode: ButtonMode.MATERIAL)));

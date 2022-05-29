@@ -233,8 +233,8 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> login(String number, String password) async {
+    final url = Uri.parse('${baseurl.baseUrl}/api/v1/users/login');
     try {
-      final url = Uri.parse('${baseurl.baseUrl}/api/v1/users/login');
       final headers = {"Content-type": "application/json"};
 
       final response = await http.post(
@@ -246,9 +246,9 @@ class UserProvider with ChangeNotifier {
         }),
       );
 
-      final responseData = json.decode(response.body) as Map<String, dynamic>;
-      if (responseData['Error'] != null) {
-        throw HttpException(responseData['Error']);
+      final responseData = json.decode(response.body);
+      if (responseData['message'] != null) {
+        throw HttpException(responseData['message'] as String);
       }
 
       _token = responseData['token'];
@@ -281,8 +281,9 @@ class UserProvider with ChangeNotifier {
         'expiryDate': _expiryDate!.toIso8601String(),
       });
       prefs.setString('userData', userData);
-    } catch (err) {
-      throw HttpException('login error is $err');
+    } catch (error) {
+      throw error;
+      //throw HttpException('login error is $error');
     }
   }
 
@@ -338,7 +339,8 @@ class UserProvider with ChangeNotifier {
       });
       prefs.setString('userData', userData);
     } catch (err) {
-      throw HttpException('signup error is $err');
+      throw err;
+      //throw HttpException('signup error is $err');
     }
   }
 

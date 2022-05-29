@@ -43,10 +43,11 @@ class _BodyChatState extends State<BodyChat> {
     final chats = Provider.of<ChatProvider>(context).items;
     return ChatBody(
         refresh: () => _fetchChats(),
-        itemBuilder: (context, i) => ChangeNotifierProvider.value(
-              value: chats[i],
-              child: ChatCard(),
-            ),
+        isEmpty1: chats,
+        itemBuilder: (context, i) {
+          return ChangeNotifierProvider.value(
+              value: chats[i], child: ChatCard());
+        },
         isLoading: _isLoading,
         length: chats.length);
   }

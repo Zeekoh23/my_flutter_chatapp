@@ -4,8 +4,8 @@ import '../screens/profilepicview_screen.dart';
 import '../helpers/socket_helper.dart';
 import '../constants.dart';
 
-class PictureType extends StatelessWidget {
-  PictureType({Key? key, required this.path}) : super(key: key);
+class NormalImage extends StatelessWidget {
+  NormalImage({Key? key, required this.path}) : super(key: key);
   String path;
 
   var socket = SocketHelper.shared;

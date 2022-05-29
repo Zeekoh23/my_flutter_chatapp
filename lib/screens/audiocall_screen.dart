@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../providers/agora_provider.dart';
 import '../constants.dart';
+import '../widgets/stop_watch.dart';
 
 class AudioCallScreen extends StatefulWidget {
   AudioCallScreen({Key? key, this.name, this.image}) : super(key: key);
@@ -28,6 +29,18 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
   bool muted = false;
   late RtcStats _stats;
   bool _showStats = false;
+  bool isHours = true;
+
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer(
+      mode: StopWatchMode.countUp,
+      onChangeRawSecond: (val) => print('onChangeRawSecond $val'),
+      onChangeRawMinute: (val) => print('onChangeRawMinute $val'),
+      onStop: () {
+        print('onStop');
+      },
+      onEnded: () {
+        print('onEnded');
+      });
 
   @override
   void initState() {
@@ -39,6 +52,11 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     ]);
 
     initCallState();
+    _stopWatchTimer.rawTime.listen(
+        (val) => print('rawTime $val ${StopWatchTimer.getDisplayTime(val)}'));
+    _stopWatchTimer.records.listen((val) => print('records $val'));
+    _stopWatchTimer.fetchStop.listen((val) => print('stop from stream'));
+    _stopWatchTimer.fetchEnded.listen((val) => print('ended from stream'));
   }
 
   @override
@@ -62,6 +80,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
     _engine.setEventHandler(RtcEngineEventHandler(
         joinChannelSuccess: (String channel, int uid, int elapsed) {
       print('joinChannelSuccess $channel $uid');
+
       setState(() {
         _joined = true;
       });
@@ -83,6 +102,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
       setState(() {
         _remoteUid = null;
       });
+      _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
     }, rtcStats: (RtcStats stats) {
       if (_showStats) {
         setState(() {
@@ -90,7 +110,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
         });
       }
     }));
-    await _engine.enableLocalAudio(true);
+    //await _engine.enableLocalAudio(true);
 
     await _engine.joinChannel(token, 'ezechannel', null, 0);
   }
@@ -118,7 +138,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                           image: NetworkImage(widget.image!),
                         ),
                         radius: kDefaultPadding * 5)),
-                const SizedBox(height: 12),
+                const SizedBox(height: 35),
                 Text(
                   widget.name!,
                   textAlign: TextAlign.center,
@@ -129,12 +149,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                 const SizedBox(
                   height: 8,
                 ),
-                _showStats
-                    ? Text(_stats.duration.toString(),
-                        style: const TextStyle(
-                          fontSize: 10,
-                        ))
-                    : const SizedBox(),
+                _renderRemoteTimer()
               ],
             ),
           ),
@@ -142,7 +157,7 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: EdgeInsets.only(
-                bottom: viewinsets.bottom + size.height - 520,
+                bottom: viewinsets.bottom + size.height - 570,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -167,6 +182,11 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
                   InkWell(
                     onTap: () {
                       _engine.destroy();
+                      setState(() {
+                        _remoteUid = null;
+                      });
+
+                      _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
                       Navigator.pop(context);
                     },
                     child: const CircleAvatar(
@@ -185,5 +205,15 @@ class _AudioCallScreenState extends State<AudioCallScreen> {
         ],
       ),
     );
+  }
+
+  Widget _renderRemoteTimer() {
+    if (_remoteUid != null) {
+      _stopWatchTimer.onExecute.add(StopWatchExecute.start);
+      return StopWatch(stopWatchTimer: _stopWatchTimer, isHours: isHours);
+    }
+    _stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+    return Text('waiting for ${widget.name} to join',
+        style: TextStyle(fontSize: 16));
   }
 }

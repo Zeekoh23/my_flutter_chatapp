@@ -58,7 +58,7 @@ class _LoginCardState extends State<LoginCard> {
     } on HttpException catch (error) {
       var errMsg = 'Authentication failed';
       if (error.toString().contains('Incorrect number or password')) {
-        errMsg = 'Invalid credentials';
+        errMsg = 'Incorrect number or password';
       }
       _showErrorDialog(errMsg);
     } catch (error) {
@@ -93,7 +93,7 @@ class _LoginCardState extends State<LoginCard> {
           //width: size.width / 1.3,
           child: const Text(
             'Log in to continue',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
           ),
         ),
       ]),
@@ -104,7 +104,7 @@ class _LoginCardState extends State<LoginCard> {
         key: _formKey,
         child: Column(children: [
           Container(
-              height: size.height / 10,
+              height: size.height / 8,
               width: size.width,
               alignment: Alignment.center,
               child: Container(
@@ -138,7 +138,7 @@ class _LoginCardState extends State<LoginCard> {
               vertical: 18.0,
             ),
             child: Container(
-                height: size.height / 10,
+                height: size.height / 8,
                 width: size.width,
                 alignment: Alignment.center,
                 child: Container(
