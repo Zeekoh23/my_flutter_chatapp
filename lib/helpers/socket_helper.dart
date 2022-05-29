@@ -24,9 +24,6 @@ class SocketHelper {
       CloudinaryPublic('cloud_name', 'upload_preset', cache: false);
   MsgController msgController = MsgController();
 
-  /*MsgController msgController = MsgController(
-      context: shared.context!, source: shared.source, number: shared.number);*/
-  //MsgController msgController = Get.put(MsgController());
   TypeController typeController = TypeController();
   ScrollController scrollController = ScrollController();
   XFile? xfile;
